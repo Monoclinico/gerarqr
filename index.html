@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de QR Code</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+        select, button {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+        }
+        #qr-code {
+            margin-top: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Gerador de QR Code</h1>
+        
+        <!-- Select para escolher o código -->
+        <select id="product-select">
+            <option value="Produto1">Produto 1</option>
+            <option value="Produto2">Produto 2</option>
+            <option value="Produto3">Produto 3</option>
+            <option value="Produto4">Produto 4</option>
+            <option value="12345">Código 12345</option>
+        </select>
+        
+        <!-- Botão para gerar o QR Code -->
+        <button onclick="generateQRCode()">Gerar QR Code</button>
+
+        <!-- Área onde o QR Code será exibido -->
+        <div id="qr-code">
+            <p>Escaneie o QR Code abaixo:</p>
+            <img id="qr-img" src="" alt="QR Code">
+        </div>
+    </div>
+
+    <script>
+        // Função para gerar o QR Code
+        function generateQRCode() {
+            // Obter o valor selecionado do <select>
+            const selectedValue = document.getElementById("product-select").value;
+
+            // Criar a URL para o QR Code com o valor selecionado
+            const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&ecc=Q&data=${encodeURIComponent(selectedValue)}`;
+
+            // Atualizar a imagem do QR Code
+            const qrImage = document.getElementById("qr-img");
+            qrImage.src = qrCodeUrl;
+        }
+    </script>
+
+</body>
+</html>

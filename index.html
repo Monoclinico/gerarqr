@@ -38,6 +38,11 @@
 
         /* CSS de impressão */
         @media print {
+            @page {
+                size: 8cm 2.5cm;  /* Define o tamanho da página para 8cm x 2.5cm */
+                margin: 0;         /* Remove margens para usar o espaço completo */
+            }
+
             body {
                 margin: 0;
                 padding: 0;
@@ -46,18 +51,24 @@
                 align-items: center;
                 height: 100vh;
             }
+
             .container {
                 width: 8cm; /* Largura da folha de impressão */
                 height: 2.5cm; /* Altura da folha de impressão */
                 padding: 0;
                 box-shadow: none;
                 text-align: center;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
+
             #qr-code img {
-                width: 8cm; /* Largura do QR Code */
+                width: 8cm;  /* Largura do QR Code */
                 height: 2.5cm; /* Altura do QR Code */
                 object-fit: contain; /* Ajusta para manter as proporções */
             }
+
             button, select {
                 display: none; /* Esconde os botões e selects durante a impressão */
             }

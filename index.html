@@ -44,11 +44,7 @@
         
         <!-- Select para escolher o código -->
         <select id="product-select">
-            <option value="Produto1">Produto 1</option>
-            <option value="Produto2">Produto 2</option>
-            <option value="Produto3">Produto 3</option>
-            <option value="Produto4">Produto 4</option>
-            <option value="12345">Código 12345</option>
+            <!-- As opções serão preenchidas dinamicamente aqui -->
         </select>
         
         <!-- Botão para gerar o QR Code -->
@@ -62,18 +58,55 @@
     </div>
 
     <script>
+        // Objeto com os produtos
+        let obj_produto = {
+            "a": "top faixa",
+            "b": "tomara que caia",
+            "c": "regata masculina adulto",
+            "d": "ombro unico",
+            "e": "faixa",
+            "f": "regata infantil",
+            "g": "regata decote",
+            "h": "regata basica feminina",
+            "i": "cropped decote",
+            "j": "cropped",
+            "k": "camiseta masculina adulto",
+            "l": "camiseta infantil",
+            "m": "camiseta infantil adulto",
+            "n": "blusa manga longa feminina gola alta",
+            "o": "camiseta feminino adulto"
+        };
+
+        // Função para preencher o select com os produtos
+        function populateSelect() {
+            const select = document.getElementById("product-select");
+
+            // Iterar sobre o objeto e adicionar as opções ao select
+            for (const key in obj_produto) {
+                if (obj_produto.hasOwnProperty(key)) {
+                    const option = document.createElement("option");
+                    option.value = key; // A chave será o valor da opção
+                    option.textContent = obj_produto[key]; // O valor do produto será o texto
+                    select.appendChild(option);
+                }
+            }
+        }
+
         // Função para gerar o QR Code
         function generateQRCode() {
             // Obter o valor selecionado do <select>
             const selectedValue = document.getElementById("product-select").value;
 
-            // Criar a URL para o QR Code com o valor selecionado
+            // Criar a URL para o QR Code com a chave selecionada (valor)
             const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&ecc=Q&data=${encodeURIComponent(selectedValue)}`;
 
             // Atualizar a imagem do QR Code
             const qrImage = document.getElementById("qr-img");
             qrImage.src = qrCodeUrl;
         }
+
+        // Preencher o select ao carregar a página
+        window.onload = populateSelect;
     </script>
 
 </body>

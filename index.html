@@ -35,6 +35,33 @@
             max-width: 100%;
             height: auto;
         }
+
+        /* CSS de impressão */
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+            .container {
+                width: 8cm; /* Largura da folha de impressão */
+                height: 2.5cm; /* Altura da folha de impressão */
+                padding: 0;
+                box-shadow: none;
+                text-align: center;
+            }
+            #qr-code img {
+                width: 8cm; /* Largura do QR Code */
+                height: 2.5cm; /* Altura do QR Code */
+                object-fit: contain; /* Ajusta para manter as proporções */
+            }
+            button, select {
+                display: none; /* Esconde os botões e selects durante a impressão */
+            }
+        }
     </style>
 </head>
 <body>
@@ -70,6 +97,9 @@
             <p>Escaneie o QR Code abaixo:</p>
             <img id="qr-img" src="" alt="QR Code">
         </div>
+
+        <!-- Botão para imprimir o QR Code -->
+        <button onclick="printQRCode()">Imprimir QR Code</button>
     </div>
 
     <script>
@@ -183,11 +213,17 @@
             const concatenatedValues = product + color + bias + size;
 
             // Criar a URL para o QR Code com os valores concatenados
-            const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=3000x3000&ecc=Q&data=${encodeURIComponent(concatenatedValues)}`;
+            const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&ecc=Q&data=${encodeURIComponent(concatenatedValues)}`;
 
             // Atualizar a imagem do QR Code
             const qrImage = document.getElementById("qr-img");
             qrImage.src = qrCodeUrl;
+        }
+
+        // Função para imprimir o QR Code
+        function printQRCode() {
+            // Imprimir apenas a área do QR Code
+            window.print();
         }
 
         // Preencher os selects ao carregar a página

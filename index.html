@@ -42,8 +42,23 @@
     <div class="container">
         <h1>Gerador de QR Code</h1>
         
-        <!-- Select para escolher o código -->
+        <!-- Select para escolher o produto -->
         <select id="product-select">
+            <!-- As opções serão preenchidas dinamicamente aqui -->
+        </select>
+
+        <!-- Select para escolher a cor -->
+        <select id="color-select">
+            <!-- As opções serão preenchidas dinamicamente aqui -->
+        </select>
+
+        <!-- Select para escolher o viés -->
+        <select id="bias-select">
+            <!-- As opções serão preenchidas dinamicamente aqui -->
+        </select>
+
+        <!-- Select para escolher o tamanho -->
+        <select id="size-select">
             <!-- As opções serão preenchidas dinamicamente aqui -->
         </select>
         
@@ -58,7 +73,7 @@
     </div>
 
     <script>
-        // Objeto com os produtos
+        // Objetos de dados
         let obj_produto = {
             "a": "top faixa",
             "b": "tomara que caia",
@@ -77,16 +92,80 @@
             "o": "camiseta feminino adulto"
         };
 
-        // Função para preencher o select com os produtos
-        function populateSelect() {
-            const select = document.getElementById("product-select");
+        let obj_cor = {
+            "a": "preto",
+            "b": "branco",
+            "c": "marrom claro",
+            "d": "marrom escuro/chocolate",
+            "e": "rosa pink",
+            "f": "listrado preto e branco",
+            "g": "listrado vermelho e branco",
+            "h": "verde escuro/militar/musgo",
+            "i": "azul escuro/marinho",
+            "j": "cinza",
+            "k": "vermelho",
+            "l": "vinho",
+            "m": "azul claro/bebe",
+            "n": "laranja",
+            "o": "azul bic",
+            "p": "rosa claro/bebe",
+            "q": "marrom areia",
+            "r": "listrado verde escuro e branco",
+            "s": "listrado azul claro e branco",
+            "t": "listrado verde claro e branco",
+            "u": "verde lima/limao",
+        };
 
-            // Iterar sobre o objeto e adicionar as opções ao select
-            for (const key in obj_produto) {
-                if (obj_produto.hasOwnProperty(key)) {
+        let obj_vies = {
+            "a": "preto",
+            "b": "branco",
+            "c": "marrom claro",
+            "d": "marrom escuro/chocolate",
+            "e": "rosa pink",
+            "f": "listrado preto e branco",
+            "g": "listrado vermelho e branco",
+            "h": "verde escuro/militar/musgo",
+            "i": "azul escuro/marinho",
+            "j": "cinza",
+            "k": "vermelho",
+            "l": "vinho",
+            "m": "azul claro/bebe",
+            "n": "laranja",
+            "o": "azul bic",
+            "p": "rosa claro/bebe",
+            "q": "marrom areia",
+            "r": "listrado verde escuro e branco",
+            "s": "listrado azul claro e branco",
+            "t": "listrado verde claro e branco",
+            "u": "verde lima/limao",
+            "v": "sem",
+            "w": "mesma cor",
+        };
+
+        let obj_tamanho = {
+            "a": "pp",
+            "b": "p",
+            "c": "m",
+            "d": "g",
+            "e": "gg",
+            "f": "4",
+            "g": "6",
+            "h": "8",
+            "i": "10",
+            "j": "12",
+            "k": "14",
+            "l": "16",
+            "m": "faixa",
+        };
+
+        // Função para preencher os selects dinamicamente
+        function populateSelect(selectId, obj) {
+            const select = document.getElementById(selectId);
+            for (const key in obj) {
+                if (obj.hasOwnProperty(key)) {
                     const option = document.createElement("option");
                     option.value = key; // A chave será o valor da opção
-                    option.textContent = obj_produto[key]; // O valor do produto será o texto
+                    option.textContent = obj[key]; // O valor será o texto
                     select.appendChild(option);
                 }
             }
@@ -94,19 +173,30 @@
 
         // Função para gerar o QR Code
         function generateQRCode() {
-            // Obter o valor selecionado do <select>
-            const selectedValue = document.getElementById("product-select").value;
+            // Obter os valores selecionados de cada select
+            const product = document.getElementById("product-select").value;
+            const color = document.getElementById("color-select").value;
+            const bias = document.getElementById("bias-select").value;
+            const size = document.getElementById("size-select").value;
 
-            // Criar a URL para o QR Code com a chave selecionada (valor)
-            const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&ecc=Q&data=${encodeURIComponent(selectedValue)}`;
+            // Concatenar os valores dos selects
+            const concatenatedValues = product + color + bias + size;
+
+            // Criar a URL para o QR Code com os valores concatenados
+            const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&ecc=Q&data=${encodeURIComponent(concatenatedValues)}`;
 
             // Atualizar a imagem do QR Code
             const qrImage = document.getElementById("qr-img");
             qrImage.src = qrCodeUrl;
         }
 
-        // Preencher o select ao carregar a página
-        window.onload = populateSelect;
+        // Preencher os selects ao carregar a página
+        window.onload = function() {
+            populateSelect("product-select", obj_produto);
+            populateSelect("color-select", obj_cor);
+            populateSelect("bias-select", obj_vies);
+            populateSelect("size-select", obj_tamanho);
+        };
     </script>
 
 </body>

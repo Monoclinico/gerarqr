@@ -39,7 +39,7 @@
         /* CSS de impressão */
         @media print {
             @page {
-                size: 3.18cm 5.72cm;  /* Define o tamanho da página para 8cm x 2.5cm */
+                size: 6.36cm 5.72cm;  /* Define o tamanho da página
                 margin: 0;         /* Remove margens para usar o espaço completo */
             }
 
@@ -53,7 +53,7 @@
             }
 
             .container {
-                width: 3.18cm; /* Largura da folha de impressão */
+                width: 6.36cm; /* Largura da folha de impressão */
                 height: 5.72cm; /* Altura da folha de impressão */
                 padding: 0;
                 box-shadow: none;
@@ -61,6 +61,7 @@
                 display: flex;
                 justify-content: center;
                 align-items: flex-start;
+                flex-direction: row;
             }
 
             #qr-code img {

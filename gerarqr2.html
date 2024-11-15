@@ -105,8 +105,8 @@
 
         <!-- Área onde o QR Code será exibido -->
         <div id="qr-code">
-            
-            <img id="qr-img" src="" alt="QR Code">
+            <img class="qr-img" src="" alt="QR Code">
+            <img class="qr-img" src="" alt="QR Code">
         </div>
 
         <!-- Botão para imprimir o QR Code -->
@@ -227,8 +227,9 @@
             const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&ecc=Q&data=${encodeURIComponent(concatenatedValues)}`;
 
             // Atualizar a imagem do QR Code
-            const qrImage = document.getElementById("qr-img");
-            qrImage.src = qrCodeUrl;
+            const qrImage = document.getElementsByClassName("qr-img");
+            qrImage[0].src = qrCodeUrl;
+            qrImage[1].src = qrCodeUrl;
         }
 
         // Função para imprimir o QR Code

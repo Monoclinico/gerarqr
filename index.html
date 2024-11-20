@@ -8,6 +8,7 @@
         body {
             font-family: Arial, sans-serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -22,11 +23,15 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 80%;
             max-width: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
         }
         select, button {
-            padding: 10px;
+            padding: 2px;
             font-size: 16px;
-            margin: 10px;
+            margin: 5px 5px 20px 5px;
         }
         #qr-code {
             margin-top: 10px;
@@ -34,6 +39,22 @@
         img {
             width: 1.5cm;
             height: 1.5cm;
+        }
+
+        .botao_mudar_etiqueta {
+            background-color: rgb(224, 224, 224);
+            color: black;
+            text-decoration: none;
+            display: block;
+            width: auto;
+            margin: 20px;
+            padding: 5px;
+        }
+
+        .label_select {
+            display: block;
+            margin: 0;
+            padding: 0;
         }
 
         /* CSS de impressão */
@@ -50,6 +71,7 @@
                 justify-content: center;
                 align-items: center;
                 height: 100vh;
+                flex-direction: row;
             }
 
             .container {
@@ -61,6 +83,7 @@
                 display: flex;
                 justify-content: center;
                 align-items: flex-start;
+                flex-direction: row;
             }
 
             #qr-code img {
@@ -69,32 +92,35 @@
                 object-fit: contain; /* Ajusta para manter as proporções */
             }
 
-            button, select {
+            button, select, .botao_mudar_etiqueta, .label_select {
                 display: none; /* Esconde os botões e selects durante a impressão */
             }
         }
     </style>
 </head>
 <body>
-
+    <a class="botao_mudar_etiqueta" href="">Mudar para 2 etiquetas</a>
     <div class="container">
-        
         <!-- Select para escolher o produto -->
+        <p class="label_select">Produto</p> 
         <select id="product-select">
             <!-- As opções serão preenchidas dinamicamente aqui -->
         </select>
 
         <!-- Select para escolher a cor -->
+        <p class="label_select">Cor</p>
         <select id="color-select">
             <!-- As opções serão preenchidas dinamicamente aqui -->
         </select>
 
         <!-- Select para escolher o viés -->
+        <p class="label_select">Viés</p>
         <select id="bias-select">
             <!-- As opções serão preenchidas dinamicamente aqui -->
         </select>
 
         <!-- Select para escolher o tamanho -->
+        <p class="label_select">Tamanho</p>
         <select id="size-select">
             <!-- As opções serão preenchidas dinamicamente aqui -->
         </select>

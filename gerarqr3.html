@@ -57,6 +57,15 @@
             padding: 0;
         }
 
+        .qr-code2 {
+            padding: 0px;
+            margin: 0px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+        }
+
         /* CSS de impressão */
         @media print {
             @page {
@@ -138,10 +147,14 @@
 
         <!-- Área onde o QR Code será exibido -->
         <div id="qr-code">
+            <div class="qr-code2">
             <img class="qr-img" src="" alt="QR Code">
             <img class="qr-img" src="" alt="QR Code">
+            </div>
+            <div class="qr-code2">
             <img class="qr-img" src="" alt="QR Code">
             <img class="qr-img" src="" alt="QR Code">
+            </div>
     
         </div>
 

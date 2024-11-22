@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de QR Code</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        select, button {
+            padding: 2px;
+            font-size: 16px;
+            margin: 5px 5px 20px 5px;
+        }
+        #qr-code {
+            margin-top: 10px;
+        }
+        img {
+            width: 1.5cm;
+            height: 1.5cm;
+        }
+
+        .botao_mudar_etiqueta {
+            background-color: rgb(224, 224, 224);
+            color: black;
+            text-decoration: none;
+            display: block;
+            width: auto;
+            margin: 20px;
+            padding: 5px;
+        }
+
+        .label_select {
+            display: block;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* CSS de impressão */
+        @media print {
+            @page {
+                size: 8cm 8cm; 
+                margin: 0;   
+                padding: 0;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                height: 100vh;
+            }
+
+            .container {
+                width: 8cm; /* Largura da folha de impressão */
+                height: 8cm; /* Altura da folha de impressão */
+                padding: 0;
+                box-shadow: none;
+                text-align: center;
+        
+                flex-direction: row;
+                margin: 0px 0px 0px 0px;
+                display: flex;
+                flex-wrap: nowrap;
+                justify-items: flex-start;
+                justify-content: space-evenly;
+                padding: 0px;
+                background-color: white;
+                align-items: flex-start;
+            }
+
+            #qr-code img {
+                width: 1.9cm;  /* Largura do QR Code */
+                height: 1.9cm; /* Altura do QR Code */
+                margin: 0cm 1cm 0cm 1cm;
+                object-fit: contain; /* Ajusta para manter as proporções */
+            }
+
+            button, select, .botao_mudar_etiqueta, .label_select {
+                display: none; /* Esconde os botões e selects durante a impressão */
+            }
+        }
+    </style>
+</head>
+<body>
+    <a class="botao_mudar_etiqueta" href="https://monoclinico.github.io/gerarqr/index.html">Mudar para 1 etiqueta</a>
+    <div class="container">
+        
+        <!-- Select para escolher o produto -->
+        <p class="label_select">Produto</p> 
+        <select id="product-select">
+            <!-- As opções serão preenchidas dinamicamente aqui -->
+        </select>
+
+        <!-- Select para escolher a cor -->
+        <p class="label_select">Cor</p>
+        <select id="color-select">
+            <!-- As opções serão preenchidas dinamicamente aqui -->
+        </select>
+
+        <!-- Select para escolher o viés -->
+        <p class="label_select">Viés</p>
+        <select id="bias-select">
+            <!-- As opções serão preenchidas dinamicamente aqui -->
+        </select>
+
+        <!-- Select para escolher o tamanho -->
+        <p class="label_select">Tamanho</p>
+        <select id="size-select">
+            <!-- As opções serão preenchidas dinamicamente aqui -->
+        </select>
+        
+        <!-- Botão para gerar o QR Code -->
+        <button onclick="generateQRCode()">Gerar QR Code</button>
+
+        <!-- Área onde o QR Code será exibido -->
+        <div id="qr-code">
+            <img class="qr-img" src="" alt="QR Code">
+            <img class="qr-img" src="" alt="QR Code">
+            <img class="qr-img" src="" alt="QR Code">
+            <img class="qr-img" src="" alt="QR Code">
+    
+        </div>
+
+        <!-- Botão para imprimir o QR Code -->
+        <button onclick="printQRCode()">Imprimir QR Code</button>
+    </div>
+
+    <script>
+        // Objetos de dados
+        let obj_produto = {
+            "a": "top faixa",
+            "b": "tomara que caia",
+            "c": "regata masculina adulto",
+            "d": "ombro unico",
+            "e": "faixa",
+            "f": "regata infantil",
+            "g": "regata decote",
+            "h": "regata basica feminina",
+            "i": "cropped decote",
+            "j": "cropped",
+            "k": "camiseta masculina adulto",
+            "l": "camiseta infantil",
+            "m": "blusa manga longa feminina gola alta",
+            "n": "camiseta feminino adulto",
+            "o": "regata listrada feminina",
+        };
+
+        let obj_cor = {
+            "a": "preto",
+            "b": "branco",
+            "c": "marrom claro",
+            "d": "marrom escuro/chocolate",
+            "e": "rosa pink",
+            "f": "listrado preto e branco",
+            "g": "listrado vermelho e branco",
+            "h": "verde escuro/militar/musgo",
+            "i": "azul escuro/marinho",
+            "j": "cinza",
+            "k": "vermelho",
+            "l": "vinho",
+            "m": "azul claro/bebe",
+            "n": "laranja",
+            "o": "azul bic",
+            "p": "rosa claro/bebe",
+            "q": "marrom areia",
+            "r": "listrado verde escuro e branco",
+            "s": "listrado azul claro e branco",
+            "t": "listrado verde claro e branco",
+            "u": "verde lima/limao",
+        };
+
+        let obj_vies = {
+            "a": "preto",
+            "b": "branco",
+            "c": "marrom claro",
+            "d": "marrom escuro/chocolate",
+            "e": "rosa pink",
+            "f": "listrado preto e branco",
+            "g": "listrado vermelho e branco",
+            "h": "verde escuro/militar/musgo",
+            "i": "azul escuro/marinho",
+            "j": "cinza",
+            "k": "vermelho",
+            "l": "vinho",
+            "m": "azul claro/bebe",
+            "n": "laranja",
+            "o": "azul bic",
+            "p": "rosa claro/bebe",
+            "q": "marrom areia",
+            "r": "listrado verde escuro e branco",
+            "s": "listrado azul claro e branco",
+            "t": "listrado verde claro e branco",
+            "u": "verde lima/limao",
+            "v": "sem",
+            "w": "mesma cor",
+        };
+
+        let obj_tamanho = {
+            "a": "pp",
+            "b": "p",
+            "c": "m",
+            "d": "g",
+            "e": "gg",
+            "f": "4",
+            "g": "6",
+            "h": "8",
+            "i": "10",
+            "j": "12",
+            "k": "14",
+            "l": "16",
+            "m": "faixa",
+            "n": "g1",
+            "o": "g2",
+            "p": "g3",
+        };
+
+        // Função para preencher os selects dinamicamente
+        function populateSelect(selectId, obj) {
+            const select = document.getElementById(selectId);
+            for (const key in obj) {
+                if (obj.hasOwnProperty(key)) {
+                    const option = document.createElement("option");
+                    option.value = key; // A chave será o valor da opção
+                    option.textContent = obj[key]; // O valor será o texto
+                    select.appendChild(option);
+                }
+            }
+        }
+
+        // Função para gerar o QR Code
+        function generateQRCode() {
+            // Obter os valores selecionados de cada select
+            const product = document.getElementById("product-select").value;
+            const color = document.getElementById("color-select").value;
+            const bias = document.getElementById("bias-select").value;
+            const size = document.getElementById("size-select").value;
+
+            // Concatenar os valores dos selects
+            const concatenatedValues = product + color + bias + size;
+
+            // Criar a URL para o QR Code com os valores concatenados
+            const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&ecc=Q&data=${encodeURIComponent(concatenatedValues)}`;
+
+            // Atualizar a imagem do QR Code
+            const qrImage = document.getElementsByClassName("qr-img");
+            qrImage[0].src = qrCodeUrl;
+            qrImage[1].src = qrCodeUrl;
+            qrImage[2].src = qrCodeUrl;
+            qrImage[3].src = qrCodeUrl;
+        }
+
+        // Função para imprimir o QR Code
+        function printQRCode() {
+            // Imprimir apenas a área do QR Code
+            window.print();
+        }
+
+        // Preencher os selects ao carregar a página
+        window.onload = function() {
+            populateSelect("product-select", obj_produto);
+            populateSelect("color-select", obj_cor);
+            populateSelect("bias-select", obj_vies);
+            populateSelect("size-select", obj_tamanho);
+        };
+    </script>
+
+</body>
+</html>

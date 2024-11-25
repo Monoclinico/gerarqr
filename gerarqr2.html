@@ -102,6 +102,10 @@
             button, select, .botao_mudar_etiqueta, .label_select {
                 display: none; /* Esconde os botões e selects durante a impressão */
             }
+
+            .detalhes_papel {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -145,6 +149,8 @@
 
         <!-- Botão para imprimir o QR Code -->
         <button onclick="printQRCode()">Imprimir QR Code</button>
+        <p class="detalhes_papel" >tamanho do papel deve ser: 4.00x4.00</p>
+        <p class="detalhes_papel" >margem: nenhum</p>
     </div>
 
     <script>

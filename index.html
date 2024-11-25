@@ -57,6 +57,13 @@
             padding: 0;
         }
 
+        .detalhes_papel {
+            display: block;
+            margin: 2px;
+            padding: 0;
+            
+        }
+
         /* CSS de impressão */
         @media print {
             @page {
@@ -94,6 +101,11 @@
 
             button, select, .botao_mudar_etiqueta, .label_select {
                 display: none; /* Esconde os botões e selects durante a impressão */
+            }
+
+            .detalhes_papel {
+                display: none;
+                
             }
         }
     </style>
@@ -136,6 +148,8 @@
 
         <!-- Botão para imprimir o QR Code -->
         <button onclick="printQRCode()">Imprimir QR Code</button>
+        <p class="detalhes_papel" >tamanho do papel deve ser: 2.25x1.25</p>
+        <p class="detalhes_papel" >margem: nenhum</p>
     </div>
 
     <script>

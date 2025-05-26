@@ -108,3 +108,56 @@ function printQRCode() {
     // Imprimir apenas a área do QR Code
     window.print();
 }
+
+// Função para gerar o QR Code
+function generateQRCode(etiquetas) {
+    // Obter os valores selecionados de cada select
+    const product = document.getElementById("product-select").value;
+    const color = document.getElementById("color-select").value;
+    const bias = document.getElementById("bias-select").value;
+    const size = document.getElementById("size-select").value;
+
+    // Concatenar os valores dos selects
+    const concatenatedValues = `${product}.${color}.${bias}.${size}`;
+
+    // Criar a URL para o QR Code com os valores concatenados
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=3000x3000&ecc=Q&data=${encodeURIComponent(concatenatedValues)}`;
+
+
+    const listaQrcode = document.getElementById("qr-code");
+
+    // Atualizar a imagem do QR Code
+    if (etiquetas <= 2){
+        for (let x = 1; x <= etiquetas; x++) {
+
+            let img1 = document.createElement("img");
+            img1.classList.add('qr-img');
+            img1.src = qrCodeUrl;
+
+            listaQrcode.appendChild(img1);
+
+        }
+    }else{
+        for (let x = 2; x <= etiquetas; x+=2) {
+
+            let img1 = document.createElement("img");
+            img1.classList.add('qr-img');
+            img1.src = qrCodeUrl;
+
+            let qrcode2 = document.createElement("div");
+            qrcode2.classList.add("qr-code2");
+
+            qrcode2.appendChild(img1);
+            qrcode2.appendChild(img1.cloneNode(true));
+            listaQrcode.appendChild(qrcode2);
+
+
+        }
+    }
+
+}
+
+
+window.onload = function() {
+    pesquisar();
+};

@@ -144,7 +144,7 @@
         </select>
 
         <!-- Select para escolher o viés -->
-        <p class="label_select">Viés</p>
+        <p class="label_select">Detalhe</p>
         <select id="bias-select">
             <!-- As opções serão preenchidas dinamicamente aqui -->
         </select>
@@ -156,35 +156,11 @@
         </select>
         
         <!-- Botão para gerar o QR Code -->
-        <button onclick="generateQRCode()">Gerar QR Code</button>
+        <button onclick="generateQRCode(12)">Gerar QR Code</button>
 
         <!-- Área onde o QR Code será exibido -->
         <div id="qr-code">
-            <div class="qr-code2">
-                <img class="qr-img" src="" alt="QR Code">
-                <img class="qr-img" src="" alt="QR Code">
-            </div>
-            <div class="qr-code2">
-                <img class="qr-img" src="" alt="QR Code">
-                <img class="qr-img" src="" alt="QR Code">
-            </div>
-            <div class="qr-code2">
-                <img class="qr-img" src="" alt="QR Code">
-                <img class="qr-img" src="" alt="QR Code">
-            </div>
-            <div class="qr-code2">
-                <img class="qr-img" src="" alt="QR Code">
-                <img class="qr-img" src="" alt="QR Code">
-            </div>
-            <div class="qr-code2">
-                <img class="qr-img" src="" alt="QR Code">
-                <img class="qr-img" src="" alt="QR Code">
-            </div>
-            <div class="qr-code2">
-                <img class="qr-img" src="" alt="QR Code">
-                <img class="qr-img" src="" alt="QR Code">
-            </div>
-    
+            
         </div>
 
         <!-- Botão para imprimir o QR Code -->
@@ -193,153 +169,7 @@
         <p class="detalhes_papel" >margem: nenhum</p>
     </div>
 
-    <script>
-        // Objetos de dados
-        let obj_produto = {
-            "a": "top faixa",
-            "b": "tomara que caia",
-            "c": "regata masculina adulto",
-            "d": "ombro unico",
-            "e": "faixa",
-            "f": "regata infantil",
-            "g": "regata decote",
-            "h": "regata basica feminina",
-            "i": "cropped decote",
-            "j": "cropped",
-            "k": "camiseta masculina adulto",
-            "l": "camiseta infantil",
-            "m": "blusa manga longa feminina gola alta",
-            "n": "camiseta feminino adulto",
-            "o": "regata listrada feminina",
-        };
-
-        let obj_cor = {
-            "a": "preto",
-            "b": "branco",
-            "c": "marrom claro",
-            "d": "marrom escuro/chocolate",
-            "e": "rosa pink",
-            "f": "listrado preto e branco",
-            "g": "listrado vermelho e branco",
-            "h": "verde escuro/militar/musgo",
-            "i": "azul escuro/marinho",
-            "j": "cinza",
-            "k": "vermelho",
-            "l": "vinho",
-            "m": "azul claro/bebe",
-            "n": "laranja",
-            "o": "azul bic",
-            "p": "rosa claro/bebe",
-            "q": "marrom areia",
-            "r": "listrado verde escuro e branco",
-            "s": "listrado azul claro e branco",
-            "t": "listrado verde claro e branco",
-            "u": "verde lima/limao",
-            "v": "listrado rosa claro e branco",
-        };
-
-        let obj_vies = {
-            "a": "preto",
-            "b": "branco",
-            "c": "marrom claro",
-            "d": "marrom escuro/chocolate",
-            "e": "rosa pink",
-            "f": "listrado preto e branco",
-            "g": "listrado vermelho e branco",
-            "h": "verde escuro/militar/musgo",
-            "i": "azul escuro/marinho",
-            "j": "cinza",
-            "k": "vermelho",
-            "l": "vinho",
-            "m": "azul claro/bebe",
-            "n": "laranja",
-            "o": "azul bic",
-            "p": "rosa claro/bebe",
-            "q": "marrom areia",
-            "r": "listrado verde escuro e branco",
-            "s": "listrado azul claro e branco",
-            "t": "listrado verde claro e branco",
-            "u": "verde lima/limao",
-            "v": "sem",
-            "w": "mesma cor",
-        };
-
-        let obj_tamanho = {
-            "a": "pp",
-            "b": "p",
-            "c": "m",
-            "d": "g",
-            "e": "gg",
-            "f": "4",
-            "g": "6",
-            "h": "8",
-            "i": "10",
-            "j": "12",
-            "k": "14",
-            "l": "16",
-            "m": "faixa",
-            "n": "g1",
-            "o": "g2",
-            "p": "g3",
-        };
-
-        // Função para preencher os selects dinamicamente
-        function populateSelect(selectId, obj) {
-            const select = document.getElementById(selectId);
-            for (const key in obj) {
-                if (obj.hasOwnProperty(key)) {
-                    const option = document.createElement("option");
-                    option.value = key; // A chave será o valor da opção
-                    option.textContent = obj[key]; // O valor será o texto
-                    select.appendChild(option);
-                }
-            }
-        }
-
-        // Função para gerar o QR Code
-        function generateQRCode() {
-            // Obter os valores selecionados de cada select
-            const product = document.getElementById("product-select").value;
-            const color = document.getElementById("color-select").value;
-            const bias = document.getElementById("bias-select").value;
-            const size = document.getElementById("size-select").value;
-
-            // Concatenar os valores dos selects
-            const concatenatedValues = product + color + bias + size;
-
-            // Criar a URL para o QR Code com os valores concatenados
-            const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&ecc=Q&data=${encodeURIComponent(concatenatedValues)}`;
-
-            // Atualizar a imagem do QR Code
-            const qrImage = document.getElementsByClassName("qr-img");
-            qrImage[0].src = qrCodeUrl;
-            qrImage[1].src = qrCodeUrl;
-            qrImage[2].src = qrCodeUrl;
-            qrImage[3].src = qrCodeUrl;
-            qrImage[4].src = qrCodeUrl;
-            qrImage[5].src = qrCodeUrl;
-            qrImage[6].src = qrCodeUrl;
-            qrImage[7].src = qrCodeUrl;
-            qrImage[8].src = qrCodeUrl;
-            qrImage[9].src = qrCodeUrl;
-            qrImage[10].src = qrCodeUrl;
-            qrImage[11].src = qrCodeUrl;
-        }
-
-        // Função para imprimir o QR Code
-        function printQRCode() {
-            // Imprimir apenas a área do QR Code
-            window.print();
-        }
-
-        // Preencher os selects ao carregar a página
-        window.onload = function() {
-            populateSelect("product-select", obj_produto);
-            populateSelect("color-select", obj_cor);
-            populateSelect("bias-select", obj_vies);
-            populateSelect("size-select", obj_tamanho);
-        };
-    </script>
+    <script src="main.js"></script>
 
 </body>
 </html>

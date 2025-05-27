@@ -126,6 +126,8 @@ function generateQRCode(etiquetas) {
 
     const listaQrcode = document.getElementById("qr-code");
 
+    listaQrcode.innerHTML = '';
+
     // Atualizar a imagem do QR Code
     if (etiquetas <= 2){
         for (let x = 1; x <= etiquetas; x++) {
@@ -154,8 +156,43 @@ function generateQRCode(etiquetas) {
 
         }
     }
+    showCenteredMessage();
 
 }
+
+ // Cria o elemento de mensagem quando o qrcode for gerado
+function showCenteredMessage() {
+
+    const messageDiv = document.createElement("div");
+    messageDiv.innerText = "QR Code Gerado";
+    
+    // Estilo para centralizar e colocar o elemento por cima de tudo
+    Object.assign(messageDiv.style, {
+        position: "fixed",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        backgroundColor: "rgb(3,253,25)",
+        color: "black",
+        fontWeight: "700",
+        padding: "50px",
+        borderRadius: "8px",
+        fontSize: "1.5em",
+        textAlign: "center",
+        zIndex: "9999" // garante que o elemento fique por cima de outros elementos
+    });
+    
+    // Adiciona o elemento ao corpo do documento
+    document.body.appendChild(messageDiv);
+    
+    // Remove o elemento após 2000 ms
+    setTimeout(() => {
+        messageDiv.remove();
+    }, 1000);
+}
+
+
+
 
 
 window.onload = function() {
